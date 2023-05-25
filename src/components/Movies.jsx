@@ -4,36 +4,51 @@ import { Link } from "react-router-dom"
 export default function Movies(){
     const [movies, setMovies] = useState([])
     
+    const getMovies = async () => {
+        const res = await fetch("http://localhost:8000/movies", {
+            headers: {
+               "Content-Type": "application/json" 
+            },
+            method: "GET",
+        })
+        
+        const data = await res.json()
+        console.log(data)
+        setMovies(data)
+    }
+
     useEffect(() => {
-        let moviesList = [
-            {
-                id: 1,
-                title: "Highlander",
-                release_date: "1986-03-07",
-                runtime: 116,
-                mpaa_rating: "R",
-                description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim veritatis aliquam iusto consequatur amet nisi dolorum delectus esse error deleniti eligendi rem debitis, vel quod. Incidunt quae dolorum modi."
-            },
-            {
-                id: 2,
-                title: "Raider of the Lost Ark",
-                release_date: "1981-06-12",
-                runtime: 115,
-                mpaa_rating: "PG-13",
-                description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim veritatis aliquam iusto consequatur amet nisi dolorum delectus esse error deleniti eligendi rem debitis, vel quod. Incidunt quae dolorum modi."
-            },
-            {
-                id: 3,
-                title: "Highlander",
-                release_date: "1986-03-07",
-                runtime: 116,
-                mpaa_rating: "R",
-                description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim veritatis aliquam iusto consequatur amet nisi dolorum delectus esse error deleniti eligendi rem debitis, vel quod. Incidunt quae dolorum modi."
-            },
+        // let moviesList = [
+        //     {
+        //         id: 1,
+        //         title: "Highlander",
+        //         release_date: "1986-03-07",
+        //         runtime: 116,
+        //         mpaa_rating: "R",
+        //         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim veritatis aliquam iusto consequatur amet nisi dolorum delectus esse error deleniti eligendi rem debitis, vel quod. Incidunt quae dolorum modi."
+        //     },
+        //     {
+        //         id: 2,
+        //         title: "Raider of the Lost Ark",
+        //         release_date: "1981-06-12",
+        //         runtime: 115,
+        //         mpaa_rating: "PG-13",
+        //         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim veritatis aliquam iusto consequatur amet nisi dolorum delectus esse error deleniti eligendi rem debitis, vel quod. Incidunt quae dolorum modi."
+        //     },
+        //     {
+        //         id: 3,
+        //         title: "Highlander",
+        //         release_date: "1986-03-07",
+        //         runtime: 116,
+        //         mpaa_rating: "R",
+        //         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim veritatis aliquam iusto consequatur amet nisi dolorum delectus esse error deleniti eligendi rem debitis, vel quod. Incidunt quae dolorum modi."
+        //     },
 
-        ]
+        // ]
 
-        setTimeout(() => setMovies(moviesList), 1000) // mimic the delay
+        // setTimeout(() => setMovies(moviesList), 1000) // mimic the delay
+    
+        getMovies()
     }, [])
     
     return (
@@ -49,7 +64,7 @@ export default function Movies(){
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {   movies.length > 0  && 
                         movies.map(movie => (
                             <tr key={movie.id}>
                                 <td>
